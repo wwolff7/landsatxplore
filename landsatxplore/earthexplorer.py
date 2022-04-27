@@ -28,7 +28,8 @@ DATA_PRODUCTS = {
     "landsat_ot_c2_l1": "5e81f14ff4f9941c",
     "landsat_tm_c2_l2": "5e83d11933473426",
     "landsat_etm_c2_l2": "5e83d12aada2e3c5",
-    "landsat_ot_c2_l2": "5e83d14f30ea90a9",
+    "landsat_ot_c2_l2": "5e83d14fec7cae84",
+    "landsat_ot_c2_l2_Bands": "5f85f0419985f2aa",
     "sentinel_2a": "5e83a42c6eba8084",
 }
 
@@ -145,6 +146,36 @@ class EarthExplorer(object):
             entity_id = self.api.get_entity_id(identifier, dataset)
         else:
             entity_id = identifier
+        url = EE_DOWNLOAD_URL.format(
+            data_product_id=DATA_PRODUCTS[dataset], entity_id=entity_id
+        )
+        filename = self._download(url, output_dir, timeout=timeout, skip=skip)
+        return filename
+    
+        def download_Bands(self, identifier, output_dir, dataset, timeout=300, skip=False):
+        """Download a Landsat QA scene.
+
+        Parameters
+        ----------
+        identifier : str
+            Scene Entity ID or Display ID.
+        output_dir : str
+            Output directory. Automatically created if it does not exist.
+        dataset : str, optional
+            Dataset name.
+        timeout : int, optional
+            Connection timeout in seconds.
+        skip : bool, optional
+            Skip download, only returns the remote filename.
+
+        Returns
+        -------
+        filename : str
+            Path to downloaded file.
+        """
+        os.makedirs(output_dir, exist_ok=True)
+        entity_id = identifier
+
         url = EE_DOWNLOAD_URL.format(
             data_product_id=DATA_PRODUCTS[dataset], entity_id=entity_id
         )
