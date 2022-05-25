@@ -151,8 +151,8 @@ class EarthExplorer(object):
         )
         filename = self._download(url, output_dir, timeout=timeout, skip=skip)
         return filename
-    
-        def download_Bands(self, identifier, output_dir, dataset, timeout=300, skip=False):
+   
+    def download_Bands(self, identifier, output_dir, dataset, timeout=300, skip=False):
         """Download a Landsat QA scene.
 
         Parameters
